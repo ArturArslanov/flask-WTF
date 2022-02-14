@@ -13,11 +13,12 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
 
-
 @app.route('/')
 @app.route('/index')
-def index():
-    params = {'title': 'загатовка',
+@app.route('/<string:title>')
+@app.route('/index/<string:title>')
+def index(title='заголовок не указан'):
+    params = {'title': title,
               'header': 'Миссия Колонизация Марса',
               'text': 'И на Марсе будут яблони цвести!',
               'href': f"{url_for('static', filename='css/style.css')}"}
