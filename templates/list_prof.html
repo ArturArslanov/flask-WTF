@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% set source = source2 %}
+{% block content %}
+
+{% if text2 == 1 or text2 == 0 %}
+    <h5> список профессий </h5>
+    {% for i in professions %}
+        {% if text2 == 0 %}
+            <p id="text_"> {{loop.index}} {{i}} </p>
+        {% elif text2 == 1 %}
+            <li id="text_"> {{i}} </li>
+        {% endif %}
+    {% endfor %}
+{% else %}
+<h6> {{text2}} </h6>
+{% endif %}
+{% endblock %}

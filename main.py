@@ -1,3 +1,5 @@
+import os
+
 from flask import app, Flask, url_for, render_template, redirect
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
@@ -48,7 +50,7 @@ def profession(prof=None):
         return redirect('/')
     if any(i in prof for i in ('инженер', 'строитель')):
         params['img'] = url_for('static', filename='img/worker.png')
-        params['text1'] = f'тренажёры по специальности {prof.replace("строитель","").replace("инженер","")}'
+        params['text1'] = f'тренажёры по специальности {prof.replace("строитель", "").replace("инженер", "")}'
     else:
         params['img'] = url_for('static', filename='img/science.png')
         params['text1'] = 'научные стимуляторы'
@@ -57,5 +59,23 @@ def profession(prof=None):
     return render_template('prof.html', **params)
 
 
+@app.route('/list_prof/<l>')
+def list_prof(l):
+    if l == 'ol':
+        params['text2'] = 0
+    elif l == 'ul':
+        params['text2'] = 1
+    else:
+        params['text2'] = f'НЕВЕРНЫЙ ПАРАМЕТР {l}'
+    params['professions'] = ['инженер-исследователь', 'пилот', 'строитель', 'экзобиолог', 'врач',
+                             'инженер по терраформированию', 'климатолог',
+                             'специалист по радиационной защите', 'астрогеолог', 'гляциолог',
+                             'инженер жизнеобеспечения', 'метеоролог', 'оператор марсохода',
+                             'киберинженер', 'штурман', 'пилот дронов']
+    params['source2'] = '../' + params['source']
+    return render_template('list_prof.html', **params)
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
+

@@ -6,4 +6,8 @@ color: red;
 font-style:italic;
 font-weight:lighter;
 color: green;
+text-indent:30px
+}
+#text_ {
+text-indent:15px;
 }
