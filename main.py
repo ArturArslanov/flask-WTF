@@ -48,15 +48,11 @@ def profession(prof=None):
         return redirect('/')
     if any(i in prof for i in ('инженер', 'строитель')):
         params['img'] = url_for('static', filename='img/worker.png')
-        profes = prof.split()
-        for i in prof:
-            if not any(j in i for j in ('инженер', 'строитель')):
-                profes = i
-            break
-        params['text1'] = f'тренажёры по специальности {profes}'
+        params['text1'] = f'тренажёры по специальности {prof.replace("строитель","").replace("инженер","")}'
     else:
         params['img'] = url_for('static', filename='img/science.png')
         params['text1'] = 'научные стимуляторы'
+    print(params['text1'])
     params['source2'] = '../' + params['source']
     return render_template('prof.html', **params)
 
