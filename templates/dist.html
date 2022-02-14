@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h5> <center> Размещение по каютам </center> </h5>
+
+{% for i in astro %}
+<center> <li> {{ i }} - Каюта №{{ loop.index }} {% if loop.first %}
+    {% if i == 'Джек Воробей' %}
+        {% set cap = "Капитан Джек Воробей" %}
+    {% else %}
+        {%set cap = "Капитан" %}
+    {% endif %}
+    ({{cap}}) {% endif %}
+
+</li>  </center>
+
+{% endfor %}
+{% endblock %}

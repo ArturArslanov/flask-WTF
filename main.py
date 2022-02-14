@@ -76,6 +76,13 @@ def list_prof(l):
     return render_template('list_prof.html', **params)
 
 
+@app.route('/distribution')
+def dist():
+    astro = ['Джек Воробей', 'Джеймс', 'Райнер', 'Сара', 'Уильям']
+    params['astro'] = astro
+    params['source2'] = '../' + params['source']
+    return render_template('dist.html', **params)
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
-
