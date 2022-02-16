@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if form %}
+<img src={{img}}> <strong>Аварийный доступ</strong>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p id="mar2">
+            {{ form.user.label }}<br>
+            {{ form.user(class="form-control") }}<br>
+            {% for error in form.user.errors %}
+                <div id="err" class="alert alert-danger" role="alert">
+                    {{ form.user.description }}
+                </div>
+            {% endfor %}
+        </p>
+        <p id="mar2">
+            {{ form.password.label }}<br>
+            {{ form.password(class="form-control", type="password") }}<br>
+            {% for error in form.password.errors %}
+                <div id="err" class="alert alert-danger" role="alert">
+                     {{ form.password.description }}
+                </div>
+            {% endfor %}
+        </p>
+        <p id="mar2">
+            {{ form.cap.label }}<br>
+            {{ form.cap(class="form-control") }}<br>
+            {% for error in form.cap.errors %}
+                <div id="err" class="alert alert-danger" role="alert">
+                     {{ form.cap.description }}
+                </div>
+            {% endfor %}
+        </p>
+        <p id="mar2">
+            {{ form.cap_pass.label }}<br>
+            {{ form.cap_pass(class="form-control", type="password") }}<br>
+            {% for error in form.cap_pass.errors %}
+                <div id="err" class="alert alert-danger" role="alert">
+                     {{ form.cap_pass.description }}
+                </div>
+            {% endfor %}
+        </p>
+        <p id="mar2">{{ form.submit(type="submit", class="btn btn-primary")
+            }}</p>
+    </form>
+{% else %}
+<form method="get" action=" ">
+    <div div class="alert alert-primary" role="alert" id="mar2">
+        вы получили доступ к системам корабля
+    </div>
+</form>
+{% endif %}
+{% endblock %}

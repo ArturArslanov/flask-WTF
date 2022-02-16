@@ -15,6 +15,18 @@ params = {'title': 'захват марса',
           'source': 'static/css/style.css'}
 
 
+class LoginForm2(FlaskForm):
+    user = StringField('Ваш айди', validators=[DataRequired()],
+                       description='обязательный')
+    password = PasswordField('Ваш Пароль', validators=[DataRequired()],
+                             description='обязательный')
+    cap = StringField('айди капитана', validators=[DataRequired()],
+                      description='обязательный')
+    cap_pass = PasswordField('Пароль Капитана', validators=[DataRequired()],
+                             description='обязательный')
+    submit = SubmitField('Доступ')
+
+
 class LoginForm(FlaskForm):
     username = StringField('Имя', validators=[DataRequired()],
                            description='обязательный')
@@ -38,8 +50,18 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Продолжить')
 
 
-@app.route('/answer', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    form = LoginForm2()
+
+    if form.validate_on_submit():
+        return render_template('help.html', **params)
+    params['img'] = url_for('static', filename='img/mars.png')
+    return render_template('help.html', **params, form=form)
+
+
+@app.route('/answer', methods=['GET', 'POST'])
+def nologin():
     form = LoginForm()
     params['source2'] = '../' + params['source']
     if form.validate_on_submit():
