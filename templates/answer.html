@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% set source = source2 %}
+{% block content %}
+{% if form %}
+    <form action=" " method="post" novalidate>
+            <div>
+                {{  form.csrf_token }}
+            </div>
+             {% for field in form if field.name != 'csrf_token' %}
+                <div id="mar">
+                    {{ field.label() }}
+                    {{ field }}
+                    {%  for error in field.errors %}
+                          <div class="alert alert-danger" role="alert">
+                            {{field.description}}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+    </form>
+{% else %}
+<form method="get" action=" ">
+    <div id="mar">
+        Имя: {{username}} <br>
+        фамилия: {{surname}}<br>
+        Образование: {{education}}<br>
+        Профессия: {{prof}}<br>
+        Пол: {{sex}}<br>
+        Мотивация: {{motive}}
+    </div>
+</form>
+{% endif %}
+{% endblock %}

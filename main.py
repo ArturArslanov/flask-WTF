@@ -1,8 +1,9 @@
 import os
 
-from flask import app, Flask, url_for, render_template, redirect
+from flask import app, Flask, url_for, render_template, redirect, request
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
+    TextAreaField, SelectField, SelectFieldBase
 from wtforms.validators import DataRequired
 
 app = Flask(__name__)
@@ -15,10 +16,50 @@ params = {'title': 'захват марса',
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Логин', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
-    remember_me = BooleanField('Запомнить меня')
-    submit = SubmitField('Войти')
+    username = StringField('Имя', validators=[DataRequired()],
+                           description='обязательный')
+    surname = StringField('Фамилия', validators=[DataRequired()],
+                          description='обязательный')
+    education = StringField('образование', validators=[DataRequired()],
+                            description='обязательный')
+    sex = SelectField('пол', validators=[DataRequired()],
+                      choices=['Мужской', 'Женский'], )
+    prof = SelectField('профессия', validators=[DataRequired()],
+                       choices=['инженер-исследователь', 'пилот',
+                                'строитель',
+                                'экзобиолог', 'врач',
+                                'инженер по терраформированию', 'климатолог',
+                                'специалист по радиационной защите',
+                                'астрогеолог', 'гляциолог',
+                                'инженер жизнеобеспечения', 'метеоролог',
+                                'оператор марсохода',
+                                'киберинженер', 'штурман', 'пилот дронов'])
+    motive = TextAreaField("мотивация")
+    submit = SubmitField('Продолжить')
+
+
+@app.route('/answer', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    params['source2'] = '../' + params['source']
+    if form.validate_on_submit():
+        params['username'] = request.form['username']
+        params['surname'] = request.form['surname']
+        params['education'] = request.form['education']
+        params['prof'] = request.form['prof']
+        params['sex'] = request.form['sex']
+        params['motive'] = request.form['motive'] if request.form[
+            'motive'] else 'отсутствует'
+        return redirect('/auto_answer')
+    return render_template('answer.html', form=form, **params)
+
+
+@app.route('/auto_answer')
+def auto_answer():
+    params['source2'] = '../' + params['source']
+    # print(request)
+
+    return render_template('answer.html', **params)
 
 
 @app.route('/')
@@ -30,19 +71,6 @@ def index(title='заголовок не указан'):
     return render_template('base.html', **params)
 
 
-@app.route('/login')
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        return redirect('/succes')
-    return render_template('login.html', title='Авторизация', form=form)
-
-
-@app.route('/succes')
-def succes_login_up():
-    return redirect('/index')
-
-
 @app.route('/training/<prof>')
 @app.route('/training')
 def profession(prof=None):
@@ -50,7 +78,8 @@ def profession(prof=None):
         return redirect('/')
     if any(i in prof for i in ('инженер', 'строитель')):
         params['img'] = url_for('static', filename='img/worker.png')
-        params['text1'] = f'тренажёры по специальности {prof.replace("строитель", "").replace("инженер", "")}'
+        params[
+            'text1'] = f'тренажёры по специальности {prof.replace("строитель", "").replace("инженер", "")}'
     else:
         params['img'] = url_for('static', filename='img/science.png')
         params['text1'] = 'научные стимуляторы'
@@ -67,10 +96,13 @@ def list_prof(l):
         params['text2'] = 1
     else:
         params['text2'] = f'НЕВЕРНЫЙ ПАРАМЕТР {l}'
-    params['professions'] = ['инженер-исследователь', 'пилот', 'строитель', 'экзобиолог', 'врач',
+    params['professions'] = ['инженер-исследователь', 'пилот', 'строитель',
+                             'экзобиолог', 'врач',
                              'инженер по терраформированию', 'климатолог',
-                             'специалист по радиационной защите', 'астрогеолог', 'гляциолог',
-                             'инженер жизнеобеспечения', 'метеоролог', 'оператор марсохода',
+                             'специалист по радиационной защите',
+                             'астрогеолог', 'гляциолог',
+                             'инженер жизнеобеспечения', 'метеоролог',
+                             'оператор марсохода',
                              'киберинженер', 'штурман', 'пилот дронов']
     params['source2'] = '../' + params['source']
     return render_template('list_prof.html', **params)
