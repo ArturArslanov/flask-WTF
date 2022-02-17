@@ -1,4 +1,6 @@
+import json
 import os
+from random import choice
 
 from flask import app, Flask, url_for, render_template, redirect, request
 from flask_wtf import FlaskForm
@@ -48,6 +50,15 @@ class LoginForm(FlaskForm):
                                 'киберинженер', 'штурман', 'пилот дронов'])
     motive = TextAreaField("мотивация")
     submit = SubmitField('Продолжить')
+
+
+@app.route('/member')
+def member():
+    with open('templates/team.json', 'r', encoding='utf-8') as f:
+        d1 = json.load(f)
+    any = choice(list(d1.keys()))
+    params['source2'] = '../' + params['source']
+    return render_template('member.html', **params, **d1[any])
 
 
 @app.route('/table/<string:sex>/<int:age>')

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% set source = source2 %}
+{% block content %}
+<h3 id="mar3">{{name3}} </h3>
+<img id="mar" src={{img3}}>
+<br>
+{% for i in prof3 %}
+    <strong id="mar">{{i}} {% if not loop.last %},{% endif%}</strong>
+{% endfor %}
+<br>
+<strong id="mar2">{{sex3}}   {{age3}}</strong>
+{% endblock %}
