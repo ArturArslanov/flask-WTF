@@ -17,15 +17,37 @@ text-indent:15px;
 h4 {
 border-left:20px dotted;
 }
-#mar {font-size: 25px;
+
+#mar {
+font-size: 25px;
 font-family: Verdana;
 font-variant:small-caps;
 margin:0px 30px 0px 50px;
 }
-#mar2 {font-size: 20px;
+#mar2 {
+font-size: 20px;
 margin:30px 200px 0px 100px;
 }
-#err {margin:-25px 1000px 0px 100px;
+#mar3 {
+font-size: 50px;
+margin:30px 200px 0px 100px;
+}
+#err {
+margin:-25px 1000px 0px 100px;
 font-size: 20px;
 color: blue2;
 }
+#rect1 {
+background-color:red;
+}
+#rect2 {
+background-color:LightCoral;
+}
+#rect3 {
+background-color:blue;
+}
+#rect4 {
+background-color:Aqua;
+}
+
+table {bgcolor:red;}

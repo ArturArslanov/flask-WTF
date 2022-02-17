@@ -50,6 +50,14 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Продолжить')
 
 
+@app.route('/table/<string:sex>/<int:age>')
+def table2(sex, age):
+    params['sex2'] = sex
+    params['age2'] = age
+    params['source2'] = '../../' + params['source']
+    return render_template('table.html', **params)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm2()

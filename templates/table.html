@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% set source = source2 %}
+{% block content %}
+
+{% if sex2 == "female" %}
+    {% set color = 1 %}
+{% else %}
+    {% set color = 3 %}
+{% endif %}
+
+{% if age2 < 21 %}
+    {% set color = color +1 %}
+{% endif %}
+<h3 id="mar3"> Дизайн комнаты </h3>
+<table id="mar" cols="2" border="1" margin="center">
+    <tr bgcolor="gray">
+        <td>
+            Цвет
+        </td>
+        <td>
+            эмблема
+        </td>
+    </tr>
+    <tr>
+        <td id="rect{{color}}" width="200">
+        </td>
+        <td>
+            <img src="../../static/img/ino{{color % 2}}.png">
+        </td>
+    </tr>
+</table>
+{% endblock %}
